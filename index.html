@@ -4,19 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ร้านค้าออนไลน์ Deko Shop</title>
+    <!-- เพิ่มฟอนต์ Kanit จาก Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #0ea5e9;      /* Sky Blue สดใส */
+            --primary-hover: #0284c7;
+            --secondary: #6366f1;    /* Indigo สำหรับทำ Gradient */
+            --accent: #f43f5e;       /* Rose สีชมพูอมแดง สำหรับแจ้งเตือน/ตะกร้า */
+            --bg-color: #f0f9ff;
+            --text-dark: #0f172a;
+            --text-light: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --border-color: #e0f2fe;
+            --success: #10b981;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
-            color: #1a1a1a;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
@@ -25,16 +41,18 @@
             padding: 0 24px;
         }
 
-        /* Clean Header */
+        /* Modern Glass Header */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid #e2e8f0;
-            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 16px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.05);
+            transition: all 0.3s ease;
         }
 
         .header-content {
@@ -47,72 +65,114 @@
             font-size: 1.8rem;
             font-weight: 700;
             text-decoration: none;
-            color: #1e293b;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .logo::before {
-            content: '🛒';
-            font-size: 1.8rem;
+            content: '🛍️';
+            font-size: 2rem;
+            -webkit-text-fill-color: initial;
         }
 
         nav ul {
             list-style: none;
             display: flex;
-            gap: 8px;
+            gap: 12px;
         }
 
         nav a {
-            color: #64748b;
+            color: var(--text-light);
             text-decoration: none;
-            padding: 12px 20px;
+            padding: 10px 20px;
             border-radius: 12px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-weight: 500;
             cursor: pointer;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 0.3s ease;
         }
 
         nav a:hover, nav a.active {
-            background: #1e293b;
-            color: white;
-            transform: translateY(-1px);
+            color: var(--primary);
+            background: rgba(14, 165, 233, 0.08);
+        }
+
+        nav a.active::after {
+            width: 60%;
         }
 
         .cart-icon {
             position: relative;
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            color: #1e293b;
+            background: white;
+            border: 2px solid var(--border-color);
+            color: var(--text-dark);
             padding: 12px;
-            border-radius: 12px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(14, 165, 233, 0.05);
         }
 
         .cart-icon:hover {
-            background: #1e293b;
-            color: white;
-            border-color: #1e293b;
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.15);
         }
 
         .cart-count {
             position: absolute;
             top: -8px;
             right: -8px;
-            background: #ef4444;
+            background: var(--accent);
             color: white;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            font-size: 0.75rem;
+            width: 26px;
+            height: 26px;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 700;
+            box-shadow: 0 4px 6px rgba(244, 63, 94, 0.3);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cart-count.bounce {
+            animation: badgeBounce 0.5s;
+        }
+
+        @keyframes badgeBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
         }
 
         /* Main Content */
@@ -123,146 +183,219 @@
 
         .page {
             display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
         .page.active {
             display: block;
-            animation: fadeIn 0.4s ease;
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Clean Hero Section */
+        /* Animated Hero Section */
         .hero {
-            background: white;
+            position: relative;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 100%);
+            backdrop-filter: blur(10px);
             text-align: center;
-            padding: 80px 40px;
-            border-radius: 20px;
-            margin-bottom: 48px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
+            padding: 100px 40px;
+            border-radius: 30px;
+            margin-bottom: 60px;
+            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.08);
+            border: 1px solid rgba(255,255,255,0.8);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 50%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+            transform: rotate(-45deg);
+            z-index: -1;
+            animation: pulse 8s infinite alternate;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin-bottom: 16px;
-            color: #1e293b;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 20px;
             font-weight: 800;
             letter-spacing: -0.025em;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
         .hero p {
             font-size: 1.25rem;
-            margin-bottom: 32px;
-            color: #64748b;
+            margin-bottom: 40px;
+            color: var(--text-light);
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+            opacity: 0;
         }
 
         .btn {
-            background: #1e293b;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 16px 32px;
+            padding: 16px 40px;
             border: none;
-            border-radius: 12px;
+            border-radius: 100px;
             cursor: pointer;
             font-size: 1.1rem;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);
+            animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+            opacity: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: shine 3s infinite;
         }
 
         .btn:hover {
-            background: #0f172a;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(30, 41, 59, 0.2);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 25px rgba(14, 165, 233, 0.4);
         }
 
-        /* Clean Categories */
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        /* Categories */
         .categories {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 48px;
+            gap: 30px;
+            margin-bottom: 60px;
         }
 
         .category-card {
-            background: white;
-            padding: 32px 24px;
-            border-radius: 20px;
+            background: var(--card-bg);
+            padding: 40px 24px;
+            border-radius: 24px;
             text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.05);
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(14, 165, 233, 0.05) 100%);
+            z-index: 0;
         }
 
         .category-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            border-color: #cbd5e1;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
+            border-color: rgba(14, 165, 233, 0.2);
         }
 
         .category-image {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            border-radius: 16px;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.5s ease;
+            border: 4px solid white;
+        }
+
+        .category-card:hover .category-image {
+            transform: rotate(5deg) scale(1.1);
         }
 
         .category-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
         }
 
         .category-card h3 {
-            color: #1e293b;
-            font-size: 1.4rem;
+            color: var(--text-dark);
+            font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
         }
 
         .category-card p {
-            color: #64748b;
-            font-size: 0.95rem;
-            line-height: 1.5;
+            color: var(--text-light);
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Clean Products Grid */
+        /* Products Grid */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
-            margin-bottom: 48px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
         }
 
         .product-card {
-            background: white;
-            border-radius: 20px;
+            background: var(--card-bg);
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.05);
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            display: flex;
+            flex-direction: column;
         }
 
         .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            border-color: #cbd5e1;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.12);
         }
 
         .product-image {
             width: 100%;
             height: 280px;
-            background: #f8fafc;
+            background: #fff;
             overflow: hidden;
             position: relative;
         }
@@ -271,74 +404,105 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .product-card:hover .product-image img {
-            transform: scale(1.05);
+            transform: scale(1.08);
+        }
+
+        .product-category-tag {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            z-index: 2;
         }
 
         .product-info {
             padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
         .product-title {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.25rem;
+            font-weight: 600;
             margin-bottom: 8px;
-            color: #1e293b;
+            color: var(--text-dark);
+            flex-grow: 1;
         }
 
         .product-price {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #059669;
-            margin-bottom: 16px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
         }
 
         .add-to-cart {
             width: 100%;
-            background: #f8fafc;
-            border: 2px solid #e2e8f0;
-            color: #1e293b;
+            background: white;
+            border: 2px solid var(--border-color);
+            color: var(--primary);
             padding: 14px;
-            border-radius: 12px;
+            border-radius: 16px;
             cursor: pointer;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
 
         .add-to-cart:hover {
-            background: #1e293b;
+            background: var(--primary);
             color: white;
-            border-color: #1e293b;
-            transform: translateY(-1px);
+            border-color: var(--primary);
         }
 
-        /* Clean Cart Styles */
+        .add-to-cart.success {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        /* Cart Styles */
         .cart-item {
-            background: white;
-            padding: 24px;
-            border-radius: 16px;
-            margin-bottom: 16px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
+            gap: 24px;
+            box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.05);
+            border: 1px solid rgba(255,255,255,0.8);
             transition: all 0.3s ease;
+            animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
         .cart-item:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.1);
+            transform: translateX(4px);
         }
 
         .cart-item img {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .cart-item-info {
@@ -346,111 +510,129 @@
         }
 
         .cart-item-title {
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 8px;
-            color: #1e293b;
-            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-size: 1.2rem;
         }
 
         .cart-item-price {
-            color: #059669;
+            color: var(--primary);
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
         .quantity-controls {
             display: flex;
             align-items: center;
-            gap: 12px;
-            background: #f8fafc;
-            padding: 8px 16px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
+            gap: 16px;
+            background: white;
+            padding: 6px 12px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .quantity-btn {
-            background: white;
-            border: 1px solid #e2e8f0;
-            color: #1e293b;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            background: transparent;
+            border: none;
+            color: var(--text-dark);
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             font-weight: bold;
+            font-size: 1.2rem;
         }
 
         .quantity-btn:hover {
-            background: #1e293b;
-            color: white;
-            border-color: #1e293b;
+            background: var(--bg-color);
+            color: var(--primary);
         }
 
         .quantity-controls span {
-            color: #1e293b;
             font-weight: 600;
             min-width: 24px;
             text-align: center;
+            font-size: 1.1rem;
         }
 
         .remove-btn {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #dc2626;
+            background: #fff1f2;
+            border: 1px solid #ffe4e6;
+            color: #e11d48;
             padding: 12px 20px;
-            border-radius: 12px;
+            border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 600;
         }
 
         .remove-btn:hover {
-            background: #dc2626;
+            background: #e11d48;
             color: white;
-            border-color: #dc2626;
+            border-color: #e11d48;
+            transform: scale(1.05);
         }
 
         .cart-total {
-            background: white;
-            padding: 32px;
-            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 24px;
             text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            margin-top: 32px;
+            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.25);
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
         }
 
         .total-amount {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
-            color: #059669;
-            margin-bottom: 20px;
+            color: white;
+            margin-bottom: 24px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        /* Clean Checkout Form */
-        .checkout-form {
+        .cart-total .checkout-btn {
             background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
-            max-width: 600px;
+            color: var(--primary);
+            border: none;
+        }
+        
+        .cart-total .checkout-btn:hover {
+            background: #f8fafc;
+            color: var(--primary-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Checkout Form */
+        .checkout-form {
+            background: var(--card-bg);
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(14, 165, 233, 0.08);
+            border: 1px solid rgba(255,255,255,0.8);
+            max-width: 700px;
             margin: 0 auto;
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
-            color: #1e293b;
-            font-size: 1rem;
+            color: var(--text-dark);
+            font-size: 1.1rem;
         }
 
         .form-group input,
@@ -458,177 +640,201 @@
         .form-group textarea {
             width: 100%;
             padding: 16px 20px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
             font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #f8fafc;
-            color: #1e293b;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #94a3b8;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            color: var(--text-dark);
         }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #1e293b;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+            transform: translateY(-2px);
         }
 
         .checkout-btn {
             width: 100%;
-            background: #1e293b;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border: none;
             color: white;
             padding: 18px;
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.2);
         }
 
         .checkout-btn:hover {
-            background: #0f172a;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(30, 41, 59, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(14, 165, 233, 0.3);
         }
 
         /* Category Filter */
         .category-filter {
             display: flex;
             gap: 12px;
-            margin-bottom: 32px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .filter-btn {
             background: white;
-            border: 2px solid #e2e8f0;
-            color: #64748b;
-            padding: 12px 24px;
-            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            color: var(--text-light);
+            padding: 12px 28px;
+            border-radius: 100px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-size: 1rem;
         }
 
         .filter-btn.active,
         .filter-btn:hover {
-            background: #1e293b;
+            background: var(--primary);
             color: white;
-            border-color: #1e293b;
-            transform: translateY(-1px);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.2);
         }
 
-        /* Page Titles */
+        /* Typography */
         h2 {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             font-size: clamp(2rem, 4vw, 3rem);
-            color: #1e293b;
+            color: var(--text-dark);
             font-weight: 800;
-            letter-spacing: -0.025em;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
         }
 
         /* Empty Cart */
         .empty-cart {
             text-align: center;
-            padding: 80px 40px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e2e8f0;
+            padding: 100px 40px;
+            background: var(--card-bg);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.05);
+            border: 1px solid rgba(255,255,255,0.8);
+            animation: popIn 0.5s ease;
         }
 
         .empty-cart h2 {
-            margin-bottom: 16px;
-            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        .empty-cart h2::after { display: none; }
+
+        .empty-cart .icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
         }
 
-        .empty-cart p {
-            color: #64748b;
-            font-size: 1.1rem;
-            margin-bottom: 32px;
+        /* Success Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            transform: scale(0.8) translateY(30px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+        .success-icon {
+            width: 80px; height: 80px;
+            background: var(--success);
+            color: white;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 20px;
+            animation: scaleIn 0.5s 0.2s backwards;
         }
 
-        /* Animations */
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Keyframes */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes pulse {
+            0% { transform: rotate(-45deg) scale(1); opacity: 0.3; }
+            100% { transform: rotate(-45deg) scale(1.1); opacity: 0.6; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
         }
 
-        .fade-in {
-            animation: slideInUp 0.6s ease;
-        }
-
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 0 16px;
-            }
-
-            .header-content {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 8px;
-            }
-
-            .hero {
-                padding: 60px 24px;
-                margin-bottom: 32px;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .categories {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .products-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 16px;
-            }
-
-            .cart-item {
-                flex-direction: column;
-                text-align: center;
-                gap: 16px;
-            }
-
-            .checkout-form {
-                padding: 24px;
-                margin: 0 16px;
-            }
-
-            .category-filter {
-                gap: 8px;
-            }
-
-            .filter-btn {
-                padding: 10px 16px;
-                font-size: 0.9rem;
-            }
+            .header-content { flex-direction: column; gap: 20px; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            .hero { padding: 60px 20px; }
+            .hero h1 { font-size: 2rem; }
+            .cart-item { flex-direction: column; text-align: center; }
+            .cart-item img { width: 100%; height: 200px; }
+            .checkout-form { padding: 30px 20px; }
+            .filter-btn { padding: 8px 16px; font-size: 0.9rem; }
+            h2 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -636,12 +842,12 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <a class="logo" onclick="showPage('home')">ร้านค้าออนไลน์ Deko Shop</a>
+                <a class="logo" onclick="showPage('home')">Deko Shop</a>
                 <nav>
                     <ul>
                         <li><a class="nav-link active" onclick="showPage('home')">หน้าแรก</a></li>
-                        <li><a class="nav-link" onclick="showPage('products')">สินค้า</a></li>
-                        <li><a class="nav-link" onclick="showPage('cart')">ตะกร้า</a></li>
+                        <li><a class="nav-link" onclick="showPage('products')">สินค้าทั้งหมด</a></li>
+                        <li><a class="nav-link" onclick="showPage('cart')">ตะกร้าสินค้า</a></li>
                     </ul>
                 </nav>
                 <div class="cart-icon" onclick="showPage('cart')">
@@ -656,9 +862,12 @@
         <!-- หน้าแรก -->
         <div id="home" class="page active">
             <div class="hero">
-                <h1>ยินดีต้อนรับสู่ร้านค้าออนไลน์ Deko Shop</h1>
-                <p>ค้นพบสินค้าคุณภาพดีราคาเป็นมิตร พร้อมบริการที่เป็นเลิศ</p>
-                <a href="#" class="btn" onclick="showPage('products')">เริ่มช็อปปิ้งเลย →</a>
+                <h1>ยกระดับไลฟ์สไตล์ด้วย Deko Shop</h1>
+                <p>ค้นพบสินค้าคุณภาพดีไซน์พรีเมียมในราคาที่เป็นมิตร พร้อมประสบการณ์ช้อปปิ้งที่เหนือกว่าและการบริการที่เป็นเลิศ</p>
+                <a href="#" class="btn" onclick="showPage('products')">
+                    เริ่มช้อปปิ้งเลย
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
             </div>
 
             <div class="categories">
@@ -667,38 +876,38 @@
                         <img src="https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=400&h=400&fit=crop&crop=center" alt="อิเล็กทรอนิกส์">
                     </div>
                     <h3>อิเล็กทรอนิกส์</h3>
-                    <p>โทรศัพท์ แท็บเล็ต อุปกรณ์เทคโนโลยีล้ำสมัย</p>
+                    <p>สมาร์ทโฟน แกดเจ็ต และเทคโนโลยีล้ำสมัย</p>
                 </div>
                 <div class="category-card" onclick="showPage('products'); filterProducts('fashion')">
                     <div class="category-image">
                         <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&h=400&fit=crop&crop=center" alt="แฟชั่น">
                     </div>
-                    <h3>แฟชั่น</h3>
-                    <p>เสื้อผ้า รองเท้า เครื่องประดับแฟชั่น</p>
+                    <h3>แฟชั่น & สไตล์</h3>
+                    <p>เสื้อผ้า กระเป๋า เครื่องประดับสุดอินเทรนด์</p>
                 </div>
                 <div class="category-card" onclick="showPage('products'); filterProducts('home')">
                     <div class="category-image">
                         <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop&crop=center" alt="ของใช้ในบ้าน">
                     </div>
-                    <h3>ของใช้ในบ้าน</h3>
-                    <p>เฟอร์นิเจอร์ เครื่องใช้ไฟฟ้า ของตกแต่ง</p>
+                    <h3>ตกแต่งบ้าน</h3>
+                    <p>เฟอร์นิเจอร์ เครื่องใช้ไฟฟ้า ของตกแต่งมินิมอล</p>
                 </div>
                 <div class="category-card" onclick="showPage('products'); filterProducts('books')">
                     <div class="category-image">
                         <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=400&fit=crop&crop=center" alt="หนังสือ">
                     </div>
-                    <h3>หนังสือ</h3>
-                    <p>นิยาย การ์ตูน หนังสือเรียน</p>
+                    <h3>หนังสือ & สื่อ</h3>
+                    <p>พัฒนาตนเอง นวนิยาย และความรู้ทั่วโลก</p>
                 </div>
             </div>
         </div>
 
         <!-- หน้าสินค้า -->
         <div id="products" class="page">
-            <h2>สินค้าทั้งหมด</h2>
+            <h2>สินค้าไฮไลท์ของเรา</h2>
             
             <div class="category-filter">
-                <button class="filter-btn active" onclick="filterProducts('all', this)">ทั้งหมด</button>
+                <button class="filter-btn active" onclick="filterProducts('all', this)">แสดงทั้งหมด</button>
                 <button class="filter-btn" onclick="filterProducts('electronics', this)">อิเล็กทรอนิกส์</button>
                 <button class="filter-btn" onclick="filterProducts('fashion', this)">แฟชั่น</button>
                 <button class="filter-btn" onclick="filterProducts('home', this)">ของใช้ในบ้าน</button>
@@ -712,293 +921,147 @@
 
         <!-- หน้าตะกร้า -->
         <div id="cart" class="page">
-            <h2>ตะกร้าสินค้า</h2>
+            <h2>ตะกร้าสินค้าของคุณ</h2>
             <div id="cart-items">
                 <!-- รายการสินค้าในตะกร้าจะแสดงที่นี่ -->
             </div>
             <div class="cart-total" id="cart-total-section" style="display: none;">
+                <p style="font-size: 1.2rem; margin-bottom: 10px; color: #cbd5e1;">ยอดรวมทั้งสิ้น</p>
                 <div class="total-amount" id="total-amount">฿0</div>
-                <button class="btn checkout-btn" onclick="showPage('checkout')">ดำเนินการชำระเงิน</button>
+                <button class="btn checkout-btn" style="width: 100%; max-width: 400px;" onclick="showPage('checkout')">ดำเนินการชำระเงิน →</button>
             </div>
         </div>
 
         <!-- หน้าชำระเงิน -->
         <div id="checkout" class="page">
-            <h2>ชำระเงิน</h2>
+            <h2>ข้อมูลการจัดส่ง</h2>
             <div class="checkout-form">
                 <form id="checkout-form">
                     <div class="form-group">
-                        <label for="fullName">ชื่อ-นามสกุล</label>
-                        <input type="text" id="fullName" name="fullName" placeholder="กรุณากรอกชื่อ-นามสกุล" required />
+                        <label for="fullName">ชื่อ-นามสกุลผู้รับ</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="นาย สมชาย ใจดี" required />
                     </div>
                     <div class="form-group">
-                        <label for="email">อีเมล</label>
+                        <label for="email">อีเมลติดต่อ</label>
                         <input type="email" id="email" name="email" placeholder="example@email.com" required />
                     </div>
                     <div class="form-group">
-                        <label for="phone">เบอร์โทรศัพท์</label>
+                        <label for="phone">เบอร์โทรศัพท์ (สำหรับพนักงานจัดส่ง)</label>
                         <input type="tel" id="phone" name="phone" placeholder="08x-xxx-xxxx" required />
                     </div>
                     <div class="form-group">
-                        <label for="address">ที่อยู่</label>
-                        <textarea id="address" name="address" rows="3" placeholder="กรุณากรอกที่อยู่ในการจัดส่ง" required></textarea>
+                        <label for="address">ที่อยู่สำหรับจัดส่งแบบละเอียด</label>
+                        <textarea id="address" name="address" rows="4" placeholder="บ้านเลขที่ ซอย ถนน แขวง เขต จังหวัด รหัสไปรษณีย์" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="payment">วิธีการชำระเงิน</label>
+                        <label for="payment">ช่องทางการชำระเงิน</label>
                         <select id="payment" name="payment" required>
-                            <option value="">เลือกวิธีการชำระเงิน</option>
-                            <option value="credit">บัตรเครดิต</option>
-                            <option value="bank">โอนเงินผ่านธนาคาร</option>
-                            <option value="cod">ชำระเงินปลายทาง</option>
+                            <option value="">-- กรุณาเลือก --</option>
+                            <option value="credit">💳 บัตรเครดิต / เดบิต</option>
+                            <option value="bank">📱 โอนเงินผ่านแอปธนาคาร (QR PromptPay)</option>
+                            <option value="cod">📦 ชำระเงินปลายทาง (COD)</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <div class="total-amount" id="checkout-total">฿0</div>
+                    <div class="form-group" style="background: #f8fafc; padding: 20px; border-radius: 16px; margin: 30px 0; text-align: center;">
+                        <span style="color: var(--text-light); display: block; margin-bottom: 5px;">ยอดที่ต้องชำระ</span>
+                        <div class="total-amount" id="checkout-total" style="color: var(--primary); font-size: 2.5rem; margin: 0; text-shadow: none;">฿0</div>
                     </div>
-                    <button type="submit" class="checkout-btn">ยืนยันการสั่งซื้อ</button>
+                    <button type="submit" class="checkout-btn">ยืนยันคำสั่งซื้อและชำระเงิน</button>
                 </form>
             </div>
         </div>
     </main>
 
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon">✓</div>
+            <h2 style="margin-bottom: 10px;">สั่งซื้อสำเร็จ!</h2>
+            <p style="color: var(--text-light); margin-bottom: 20px; font-size: 1.1rem;">ขอบคุณที่ไว้วางใจ Deko Shop</p>
+            <div style="background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 30px; display: inline-block;">
+                <p>หมายเลขคำสั่งซื้อ: <strong id="orderNumber" style="color: var(--primary);">#00000</strong></p>
+            </div>
+            <br>
+            <button class="btn" onclick="closeModal()">กลับสู่หน้าแรก</button>
+        </div>
+    </div>
+
     <script>
-        // ข้อมูลสินค้าพร้อมรูปจริง
+        // ข้อมูลสินค้า (ใช้ข้อมูลเดิม)
         const products = [
-            // อิเล็กทรอนิกส์
-            { 
-                id: 1, 
-                name: 'iPhone 15 Pro', 
-                price: 39900, 
-                category: 'electronics', 
-                image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 2, 
-                name: 'Samsung Galaxy S24', 
-                price: 29900, 
-                category: 'electronics', 
-                image: 'https://images.unsplash.com/photo-1610792516286-524726503fb2?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 3, 
-                name: 'MacBook Air M3', 
-                price: 44900, 
-                category: 'electronics', 
-                image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 4, 
-                name: 'iPad Pro', 
-                price: 34900, 
-                category: 'electronics', 
-                image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 5, 
-                name: 'AirPods Pro', 
-                price: 8900, 
-                category: 'electronics', 
-                image: 'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 6, 
-                name: 'PlayStation 5', 
-                price: 17900, 
-                category: 'electronics', 
-                image: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=400&fit=crop&crop=center'
-            },
-            // แฟชั่น
-            { 
-                id: 7, 
-                name: 'เสื้อยืดคอตตอน', 
-                price: 390, 
-                category: 'fashion', 
-                image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 8, 
-                name: 'กางเกงยีนส์', 
-                price: 890, 
-                category: 'fashion', 
-                image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 9, 
-                name: 'รองเท้าผ้าใบ', 
-                price: 1290, 
-                category: 'fashion', 
-                image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 10, 
-                name: 'กระเป๋าสะพาย', 
-                price: 990, 
-                category: 'fashion', 
-                image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 11, 
-                name: 'นาฬิกาข้อมือ', 
-                price: 2990, 
-                category: 'fashion', 
-                image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 12, 
-                name: 'แว่นตากันแดด', 
-                price: 690, 
-                category: 'fashion', 
-                image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop&crop=center'
-            },
-            // ของใช้ในบ้าน
-            { 
-                id: 13, 
-                name: 'โซฟาหนัง', 
-                price: 6000, 
-                category: 'home', 
-                image: 'https://ideoliving.com/wp-content/uploads/2016/09/%E0%B9%80%E0%B8%A5%E0%B8%99%E0%B8%99%E0%B8%B5%E0%B9%88.jpg'
-            },
-            { 
-                id: 14, 
-                name: 'โต๊ะทำงาน', 
-                price: 3990, 
-                category: 'home', 
-                image: 'https://www.kioskthailand.com/api/file/images/bs223-ov_1668764784726.jpg'
-            },
-            { 
-                id: 15, 
-                name: 'เก้าอี้สำนักงาน', 
-                price: 2490, 
-                category: 'home', 
-                image: 'https://leavesmall.com/cdn/shop/files/B05FC13F-5A61-4CF0-83B4-6B4BC9504D71.jpg?v=1691469901'
-            },
-            { 
-                id: 16, 
-                name: 'หม้อหุงข้าว', 
-                price: 350, 
-                category: 'home', 
-                image: 'https://www.top10.in.th/wp-content/uploads/2024/07/%E0%B8%AB%E0%B8%A1%E0%B9%89%E0%B8%AD%E0%B8%AB%E0%B8%B8%E0%B8%87%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%80%E0%B8%A5%E0%B9%87%E0%B8%81-%E0%B8%A2%E0%B8%B5%E0%B9%88%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B9%84%E0%B8%AB%E0%B8%99%E0%B8%94%E0%B8%B5.jpg'
-            },
-            { 
-                id: 17, 
-                name: 'เครื่องฟอกอากาศ', 
-                price: 4990, 
-                category: 'home', 
-                image: 'https://mazuma.co.th/wp-content/uploads/2020/02/Air-Touch-A5.jpg'
-            },
-            { 
-                id: 18, 
-                name: 'โคมไฟตั้งโต๊ะ', 
-                price: 790, 
-                category: 'home', 
-                image: 'https://down-th.img.susercontent.com/file/th-11134207-7r98t-lx3q36drna9cf7'
-            },
-            // หนังสือ
-            { 
-                id: 19, 
-                name: 'นิยายแฟนตาซี', 
-                price: 290, 
-                category: 'books', 
-                image: 'https://image.dek-d.com/contentimg/2016/orn/imrs.jpg'
-            },
-            { 
-                id: 20, 
-                name: 'หนังสือการ์ตูน', 
-                price: 150, 
-                category: 'books', 
-                image: 'https://down-th.img.susercontent.com/file/sg-11134201-7rcd6-ltc44ocpz97n82'
-            },
-            { 
-                id: 21, 
-                name: 'หนังสือพัฒนาตนเอง', 
-                price: 450, 
-                category: 'books', 
-                image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 22, 
-                name: 'หนังสือเรียนภาษาอังกฤษ', 
-                price: 590, 
-                category: 'books', 
-                image: 'https://img.th.my-best.com/product_images/762d24e38676f4f38305f53c544e6e99.jpeg?ixlib=rails-4.3.1&q=70&lossless=0&w=800&h=800&fit=clip&s=08bc07e3925e59acea6e4738253a1367'
-            },
-            { 
-                id: 23, 
-                name: 'หนังสือสอนโปรแกรม', 
-                price: 790, 
-                category: 'books', 
-                image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=400&fit=crop&crop=center'
-            },
-            { 
-                id: 24, 
-                name: 'หนังสือการเงิน', 
-                price: 390, 
-                category: 'books', 
-                image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=400&fit=crop&crop=center'
-            }
+            { id: 1, name: 'iPhone 15 Pro', price: 39900, category: 'electronics', image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=400&fit=crop&crop=center', tag: 'ขายดี' },
+            { id: 2, name: 'Samsung Galaxy S24', price: 29900, category: 'electronics', image: 'https://images.unsplash.com/photo-1610792516286-524726503fb2?w=400&h=400&fit=crop&crop=center' },
+            { id: 3, name: 'MacBook Air M3', price: 44900, category: 'electronics', image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=400&fit=crop&crop=center', tag: 'มาใหม่' },
+            { id: 4, name: 'iPad Pro', price: 34900, category: 'electronics', image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=400&fit=crop&crop=center' },
+            { id: 5, name: 'AirPods Pro', price: 8900, category: 'electronics', image: 'https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=400&fit=crop&crop=center' },
+            { id: 6, name: 'PlayStation 5', price: 17900, category: 'electronics', image: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=400&h=400&fit=crop&crop=center', tag: 'เกมเมอร์' },
+            { id: 7, name: 'เสื้อยืดคอตตอน Premium', price: 390, category: 'fashion', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop&crop=center' },
+            { id: 8, name: 'กางเกงยีนส์ทรงวินเทจ', price: 890, category: 'fashion', image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=400&fit=crop&crop=center' },
+            { id: 9, name: 'Sneakers รุ่นคลาสสิก', price: 1290, category: 'fashion', image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop&crop=center', tag: 'ยอดฮิต' },
+            { id: 10, name: 'กระเป๋าสะพายหนังแท้', price: 990, category: 'fashion', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&crop=center' },
+            { id: 11, name: 'นาฬิกาข้อมือ Minimal', price: 2990, category: 'fashion', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop&crop=center' },
+            { id: 12, name: 'แว่นตากันแดด UV400', price: 690, category: 'fashion', image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop&crop=center' },
+            { id: 13, name: 'โซฟาหนังสไตล์นอร์ดิก', price: 6000, category: 'home', image: 'https://ideoliving.com/wp-content/uploads/2016/09/%E0%B9%80%E0%B8%A5%E0%B8%99%E0%B8%99%E0%B8%B5%E0%B9%88.jpg', tag: 'แนะนำ' },
+            { id: 14, name: 'โต๊ะทำงานไม้โอ๊ค', price: 3990, category: 'home', image: 'https://www.kioskthailand.com/api/file/images/bs223-ov_1668764784726.jpg' },
+            { id: 15, name: 'เก้าอี้สำนักงานเพื่อสุขภาพ', price: 2490, category: 'home', image: 'https://leavesmall.com/cdn/shop/files/B05FC13F-5A61-4CF0-83B4-6B4BC9504D71.jpg?v=1691469901' },
+            { id: 16, name: 'หม้อหุงข้าวดิจิทัล', price: 1350, category: 'home', image: 'https://www.top10.in.th/wp-content/uploads/2024/07/%E0%B8%AB%E0%B8%A1%E0%B9%89%E0%B8%AD%E0%B8%AB%E0%B8%B8%E0%B8%87%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%80%E0%B8%A5%E0%B9%87%E0%B8%81-%E0%B8%A2%E0%B8%B5%E0%B9%88%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B9%84%E0%B8%AB%E0%B8%99%E0%B8%94%E0%B8%B5.jpg' },
+            { id: 17, name: 'เครื่องฟอกอากาศ PM2.5', price: 4990, category: 'home', image: 'https://mazuma.co.th/wp-content/uploads/2020/02/Air-Touch-A5.jpg' },
+            { id: 18, name: 'โคมไฟตั้งโต๊ะ LED', price: 790, category: 'home', image: 'https://down-th.img.susercontent.com/file/th-11134207-7r98t-lx3q36drna9cf7' },
+            { id: 19, name: 'นิยายแฟนตาซีขายดี', price: 290, category: 'books', image: 'https://lifestyle.campus-star.com/app/uploads/2019/08/witchoar1.png' },
+            { id: 20, name: 'มังงะ Boxset', price: 1150, category: 'books', image: 'https://down-th.img.susercontent.com/file/sg-11134201-7rcd6-ltc44ocpz97n82' },
+            { id: 21, name: 'จิตวิทยาพัฒนาตนเอง', price: 450, category: 'books', image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=400&fit=crop&crop=center', tag: 'Bestseller' },
+            { id: 22, name: 'เก่งอังกฤษใน 30 วัน', price: 590, category: 'books', image: 'https://img.th.my-best.com/product_images/762d24e38676f4f38305f53c544e6e99.jpeg?ixlib=rails-4.3.1&q=70&lossless=0&w=800&h=800&fit=clip&s=08bc07e3925e59acea6e4738253a1367' },
+            { id: 23, name: 'เรียนรู้ Python เบื้องต้น', price: 790, category: 'books', image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=400&fit=crop&crop=center' },
+            { id: 24, name: 'รวยด้วยหุ้น', price: 390, category: 'books', image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=400&fit=crop&crop=center' }
         ];
 
-        // ตะกร้าสินค้า
         let cart = [];
 
-        // แสดงหน้าต่างๆ
         function showPage(pageId) {
-            // ซ่อนหน้าทั้งหมด
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
             
-            // แสดงหน้าที่เลือก
-            document.getElementById(pageId).classList.add('active');
+            setTimeout(() => {
+                document.getElementById(pageId).classList.add('active');
+            }, 50); // Small delay to trigger CSS transition
             
-            // อัพเดต navigation
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => link.classList.remove('active'));
             
-            // เพิ่ม active class ให้ nav ที่ตรงกัน
-            if (pageId === 'home') {
-                navLinks[0].classList.add('active');
-            } else if (pageId === 'products') {
-                navLinks[1].classList.add('active');
-            } else if (pageId === 'cart') {
-                navLinks[2].classList.add('active');
-            }
+            if (pageId === 'home') navLinks[0].classList.add('active');
+            else if (pageId === 'products') navLinks[1].classList.add('active');
+            else if (pageId === 'cart') navLinks[2].classList.add('active');
             
-            // โหลดสินค้าเมื่อเปิดหน้าสินค้า
-            if (pageId === 'products') {
-                displayProducts();
-            } else if (pageId === 'cart') {
-                displayCart();
-            } else if (pageId === 'checkout') {
-                updateCheckoutTotal();
-            }
+            if (pageId === 'products') displayProducts();
+            else if (pageId === 'cart') displayCart();
+            else if (pageId === 'checkout') updateCheckoutTotal();
         }
 
-        // แสดงสินค้า
         function displayProducts(category = 'all') {
             const container = document.getElementById('products-container');
             let filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
             
-            container.innerHTML = filteredProducts.map(product => `
-                <div class="product-card fade-in">
+            container.innerHTML = filteredProducts.map((product, index) => `
+                <div class="product-card" style="animation-delay: ${index * 0.05}s">
                     <div class="product-image">
+                        ${product.tag ? `<div class="product-category-tag">${product.tag}</div>` : ''}
                         <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
                     </div>
                     <div class="product-info">
                         <div class="product-title">${product.name}</div>
                         <div class="product-price">฿${product.price.toLocaleString()}</div>
-                        <button class="add-to-cart" onclick="addToCart(${product.id})">
-                            เพิ่มในตะกร้า
+                        <button class="add-to-cart" id="btn-${product.id}" onclick="addToCart(${product.id}, this)">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                            ใส่ตะกร้า
                         </button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // กรองสินค้าตามหมวดหมู่
         function filterProducts(category, clickedButton = null) {
             displayProducts(category);
-            
-            // อัพเดตปุ่มกรอง
             if (clickedButton) {
                 const filterBtns = document.querySelectorAll('.filter-btn');
                 filterBtns.forEach(btn => btn.classList.remove('active'));
@@ -1006,25 +1069,29 @@
             }
         }
 
-        // เพิ่มสินค้าในตะกร้า
-        function addToCart(productId) {
+        function addToCart(productId, btnElement) {
             const product = products.find(p => p.id === productId);
             const existingItem = cart.find(item => item.id === productId);
             
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    ...product,
-                    quantity: 1
-                });
-            }
+            if (existingItem) existingItem.quantity += 1;
+            else cart.push({ ...product, quantity: 1 });
             
             updateCartUI();
-            showNotification('เพิ่มสินค้าในตะกร้าแล้ว!');
+            
+            // Button Animation
+            if(btnElement) {
+                const originalText = btnElement.innerHTML;
+                btnElement.classList.add('success');
+                btnElement.innerHTML = '✓ เพิ่มสำเร็จ';
+                setTimeout(() => {
+                    btnElement.classList.remove('success');
+                    btnElement.innerHTML = originalText;
+                }, 1000);
+            }
+            
+            showNotification(`เพิ่ม ${product.name} ลงในตะกร้าแล้ว!`);
         }
 
-        // อัพเดต UI ตะกร้า
         function updateCartUI() {
             const cartCount = document.getElementById('cart-count');
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -1032,12 +1099,15 @@
             
             if (totalItems > 0) {
                 cartCount.style.display = 'flex';
+                // Trigger bounce animation
+                cartCount.classList.remove('bounce');
+                void cartCount.offsetWidth; // trigger reflow
+                cartCount.classList.add('bounce');
             } else {
                 cartCount.style.display = 'none';
             }
         }
 
-        // แสดงตะกร้าสินค้า
         function displayCart() {
             const cartItems = document.getElementById('cart-items');
             const cartTotalSection = document.getElementById('cart-total-section');
@@ -1046,18 +1116,19 @@
             if (cart.length === 0) {
                 cartItems.innerHTML = `
                     <div class="empty-cart">
-                        <h2>ตะกร้าของคุณว่างเปล่า</h2>
-                        <p>เริ่มช็อปปิ้งเพื่อเพิ่มสินค้าในตะกร้า</p>
-                        <a href="#" class="btn" onclick="showPage('products')">เริ่มช็อปปิ้ง</a>
+                        <div class="icon">🛒</div>
+                        <h2>ตะกร้าสินค้าว่างเปล่า</h2>
+                        <p style="color: var(--text-light); margin-bottom: 30px;">คุณยังไม่ได้เลือกสินค้าใดๆ เข้ามาดูสินค้าที่น่าสนใจของเราสิ</p>
+                        <button class="btn" onclick="showPage('products')">เลือกซื้อสินค้าเลย</button>
                     </div>
                 `;
                 cartTotalSection.style.display = 'none';
                 return;
             }
             
-            cartItems.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/80x80?text=No+Image'">
+            cartItems.innerHTML = cart.map((item, index) => `
+                <div class="cart-item" style="animation-delay: ${index * 0.1}s">
+                    <img src="${item.image}" alt="${item.name}">
                     <div class="cart-item-info">
                         <div class="cart-item-title">${item.name}</div>
                         <div class="cart-item-price">฿${item.price.toLocaleString()}</div>
@@ -1067,7 +1138,7 @@
                         <span>${item.quantity}</span>
                         <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
                     </div>
-                    <button class="remove-btn" onclick="removeFromCart(${item.id})">ลบ</button>
+                    <button class="remove-btn" onclick="removeFromCart(${item.id})">ลบออก</button>
                 </div>
             `).join('');
             
@@ -1076,99 +1147,77 @@
             cartTotalSection.style.display = 'block';
         }
 
-        // อัพเดตจำนวนสินค้า
         function updateQuantity(productId, change) {
             const item = cart.find(item => item.id === productId);
             if (item) {
                 item.quantity += change;
-                if (item.quantity <= 0) {
-                    removeFromCart(productId);
-                } else {
+                if (item.quantity <= 0) removeFromCart(productId);
+                else {
                     updateCartUI();
                     displayCart();
                 }
             }
         }
 
-        // ลบสินค้าจากตะกร้า
         function removeFromCart(productId) {
             cart = cart.filter(item => item.id !== productId);
             updateCartUI();
             displayCart();
-            showNotification('ลบสินค้าจากตะกร้าแล้ว!');
+            showNotification('นำสินค้าออกจากตะกร้าแล้ว', '#f43f5e');
         }
 
-        // อัพเดตยอดรวมในหน้าชำระเงิน
         function updateCheckoutTotal() {
             const checkoutTotal = document.getElementById('checkout-total');
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             checkoutTotal.textContent = `฿${total.toLocaleString()}`;
         }
 
-        // แสดงการแจ้งเตือน
-        function showNotification(message) {
+        function showNotification(message, color = '#10b981') {
             const notification = document.createElement('div');
             notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #1e293b;
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 12px;
-                box-shadow: 0 10px 25px rgba(30, 41, 59, 0.3);
-                z-index: 1000;
-                animation: slideIn 0.3s ease;
-                border: 1px solid #334155;
+                position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-50px);
+                background: ${color}; color: white; padding: 12px 24px; border-radius: 50px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 2000;
+                font-weight: 500; display: flex; align-items: center; gap: 8px;
+                transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
+                opacity: 0;
             `;
-            notification.textContent = message;
-            
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-            `;
-            document.head.appendChild(style);
+            notification.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> ${message}`;
             
             document.body.appendChild(notification);
             
+            requestAnimationFrame(() => {
+                notification.style.transform = 'translateX(-50%) translateY(0)';
+                notification.style.opacity = '1';
+            });
+            
             setTimeout(() => {
-                notification.remove();
-                style.remove();
-            }, 3000);
+                notification.style.transform = 'translateX(-50%) translateY(-50px)';
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 400);
+            }, 2500);
         }
 
-        // จัดการฟอร์มชำระเงิน
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+            cart = [];
+            updateCartUI();
+            showPage('home');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const checkoutForm = document.getElementById('checkout-form');
             if (checkoutForm) {
                 checkoutForm.addEventListener('submit', function(e) {
                     e.preventDefault();
+                    if (cart.length === 0) return;
                     
-                    if (cart.length === 0) {
-                        alert('ตะกร้าของคุณว่างเปล่า');
-                        return;
-                    }
-                    
-                    const formData = new FormData(checkoutForm);
-                    const orderData = {
-                        items: cart,
-                        customer: Object.fromEntries(formData),
-                        total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                        orderDate: new Date().toISOString()
-                    };
-                    
-                    alert(`ขอบคุณสำหรับการสั่งซื้อ!\nหมายเลขคำสั่งซื้อ: #${Date.now()}\nยอดรวม: ฿${orderData.total.toLocaleString()}`);
-                    
-                    cart = [];
-                    updateCartUI();
-                    showPage('home');
+                    // Show custom modal instead of alert
+                    document.getElementById('orderNumber').textContent = '#' + Math.floor(100000 + Math.random() * 900000);
+                    document.getElementById('successModal').classList.add('active');
                     checkoutForm.reset();
                 });
             }
-            
             displayProducts();
         });
     </script>
